@@ -8,7 +8,9 @@
       <right class="home-right" />
     </div>
     <footer class="home-footer">
-      <el-checkbox>备选项</el-checkbox>
+      <el-checkbox class="home-footer-item">隐藏已经绑定测点</el-checkbox>
+      <el-button>生成</el-button>
+      <span class="home-footer-item">version: 1.0</span>
     </footer>
   </div>
 </template>
@@ -40,6 +42,10 @@ export default {
   }
   &-footer {
     height: 32px;
+    display: flex;
+    &-item {
+      flex: 1;
+    }
   }
 }
 </style>

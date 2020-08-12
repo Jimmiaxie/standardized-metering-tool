@@ -6,24 +6,14 @@
     <div class="p-left-table">
       <my-table :head="tableHead" :data="tableInfo" />
     </div>
-    <my-dialog title="导入文件" :visible.sync="dialogVisible" :footer="false">
+    <my-dialog title="选择模板" :visible.sync="dialogVisible">
       <template v-slot:content>
-        <el-upload
-          drag
-          action="/api/upload"
-          :on-success="handleUploadSuccess"
-          :before-upload="checkFile"
-          list-type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">
-            将文件拖到此处，或
-            <em>点击上传</em>
-          </div>
-          <div class="el-upload__tip" slot="tip">只能上传excel文件</div>
-        </el-upload>
+        <my-tree nodeKey="name" :data="treeInfo" class="tree">
+          <template slot-scope="{ data }">
+              <el-radio >{{data }}</el-radio>
+            </template>  
+        </my-tree>
       </template>
-      <template v-slot:footer></template>
     </my-dialog>
   </div>
 </template>
@@ -31,11 +21,13 @@
 <script>
 import MyDialog from "@/components/Dialog";
 import MyTable from "./components/Table";
+import MyTree from "@/components/Tree";
 
 export default {
   components: {
     MyDialog,
-    MyTable
+    MyTable,
+    MyTree
   },
   data() {
     return {
@@ -1213,30 +1205,393 @@ export default {
           status: "0",
           unit: ""
         }
-      ]
-    };
+      ],
+      treeInfo : [
+		{
+			"name": "PDU",
+			"children": [
+				{
+					"name": "PDU设备全集模板"
+				},
+				{
+					"name": "交流PDU设备类模板"
+				},
+				{
+					"name": "直流PDU设备类模板"
+				}
+			]
+		},
+		{
+			"name": "UPS",
+			"children": [
+				{
+					"name": "UPS设备全集模板"
+				},
+				{
+					"name": "单进单出塔式UPS设备类模板"
+				},
+				{
+					"name": "三进三出模块化UPS设备类模板"
+				},
+				{
+					"name": "三进三出塔式UPS设备类模板"
+				},
+				{
+					"name": "逆变器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "传感器",
+			"children": [
+				{
+					"name": "温湿度设备类模板"
+				},
+				{
+					"name": "漏水设备类模板"
+				},
+				{
+					"name": "液位设备类模板"
+				},
+				{
+					"name": "水压力设备类模板"
+				},
+				{
+					"name": "流量计设备类模板"
+				},
+				{
+					"name": "干湿球温度设备类模板"
+				},
+				{
+					"name": "水压差设备类模板"
+				},
+				{
+					"name": "冷媒泄露设备类模板"
+				},
+				{
+					"name": "二氧化碳设备类模板"
+				},
+				{
+					"name": "大气压力设备类模板"
+				}
+			]
+		},
+		{
+			"name": "低压直流电源",
+			"children": [
+				{
+					"name": "低压直流电源设备全集模板"
+				},
+				{
+					"name": "48V电源设备类模板"
+				},
+				{
+					"name": "48V电源交流柜设备类模板"
+				},
+				{
+					"name": "48V电源整流柜设备类模板"
+				},
+				{
+					"name": "48V电源直流柜设备类模板"
+				},
+				{
+					"name": "直流直流变换器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "低压配电",
+			"children": [
+				{
+					"name": "低压配电设备全集模板"
+				},
+				{
+					"name": "低压开关柜设备类模板"
+				},
+				{
+					"name": "低压母联柜设备类模板"
+				},
+				{
+					"name": "电容补偿柜设备类模板"
+				},
+				{
+					"name": "有源滤波柜设备类模板"
+				},
+				{
+					"name": "交流配电柜设备类模板"
+				},
+				{
+					"name": "ATS设备类模板"
+				},
+				{
+					"name": "单相STS设备类模板"
+				},
+				{
+					"name": "三相STS设备类模板"
+				},
+				{
+					"name": "配电箱设备类模板"
+				}
+			]
+		},
+		{
+			"name": "冷源",
+			"children": [
+				{
+					"name": "冷水机组设备全集模板"
+				},
+				{
+					"name": "水冷冷水机组设备类模板"
+				},
+				{
+					"name": "风冷冷水机组设备类模板"
+				},
+				{
+					"name": "冷却塔设备类模板"
+				},
+				{
+					"name": "水泵设备类模板"
+				},
+				{
+					"name": "蓄冷罐设备类模板"
+				},
+				{
+					"name": "加药装置设备类模板"
+				},
+				{
+					"name": "定压装置设备类模板"
+				},
+				{
+					"name": "水池设备类模板"
+				},
+				{
+					"name": "板式换热器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "列头柜",
+			"children": [
+				{
+					"name": "精密列头柜设备全集模板"
+				},
+				{
+					"name": "双进线交流列头柜设备模板"
+				},
+				{
+					"name": "单进线交流列头柜设备模板"
+				},
+				{
+					"name": "双进线直流列头柜设备模板"
+				},
+				{
+					"name": "单进线直流列头柜设备模板"
+				},
+				{
+					"name": "48V列头柜设备模板"
+				}
+			]
+		},
+		{
+			"name": "发电机组",
+			"children": [
+				{
+					"name": "柴油发电机组设备类模板"
+				},
+				{
+					"name": "储油罐设备类模板"
+				},
+				{
+					"name": "控制屏设备类模板"
+				}
+			]
+		},
+		{
+			"name": "变压器",
+			"children": [
+				{
+					"name": "变压器设备全集模板"
+				},
+				{
+					"name": "变压器设备类模板"
+				},
+				{
+					"name": "变压器温控仪设备类模板"
+				}
+			]
+		},
+		{
+			"name": "变频器",
+			"children": [
+				{
+					"name": "变频器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "电池",
+			"children": [
+				{
+					"name": "电池监控仪设备全集模板"
+				},
+				{
+					"name": "铅酸阀控蓄电池设备类模板"
+				},
+				{
+					"name": "磷酸铁锂电池设备类模板"
+				},
+				{
+					"name": "三元锂离子电池设备类模板"
+				}
+			]
+		},
+		{
+			"name": "电量仪",
+			"children": [
+				{
+					"name": "电量仪设备全集模板"
+				},
+				{
+					"name": "三相交流电量仪设备类模板"
+				},
+				{
+					"name": "单相交流电量仪设备类模板"
+				},
+				{
+					"name": "直流电量仪设备类模板"
+				}
+			]
+		},
+		{
+			"name": "直流配电",
+			"children": [
+				{
+					"name": "48V配电柜设备类模板"
+				},
+				{
+					"name": "高压直流配电柜设备类模板"
+				}
+			]
+		},
+		{
+			"name": "空调末端",
+			"children": [
+				{
+					"name": "精密空调设备全集模板"
+				},
+				{
+					"name": "冷冻水型精密空调设备类模板"
+				},
+				{
+					"name": "风冷型精密空调设备类模板"
+				},
+				{
+					"name": "双冷源型精密空调设备类模板"
+				},
+				{
+					"name": "AHU设备类模板"
+				},
+				{
+					"name": "新风机设备类模板"
+				},
+				{
+					"name": "OCU设备类模板"
+				},
+				{
+					"name": "加湿器设备全集模板"
+				},
+				{
+					"name": "湿膜加湿器设备类模板"
+				},
+				{
+					"name": "高压微雾加湿器设备类模板"
+				},
+				{
+					"name": "风机设备类模板"
+				},
+				{
+					"name": "风阀设备类模板"
+				}
+			]
+		},
+		{
+			"name": "管道",
+			"children": [
+				{
+					"name": "比例阀门设备类模板"
+				},
+				{
+					"name": "开关阀门设备类模板"
+				},
+				{
+					"name": "电伴热设备类模板"
+				},
+				{
+					"name": "过滤器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "虚拟设备",
+			"children": [
+				{
+					"name": "机房能效统计设备类模板"
+				}
+			]
+		},
+		{
+			"name": "采集控制",
+			"children": [
+				{
+					"name": "智能采集控制器设备类模板"
+				}
+			]
+		},
+		{
+			"name": "高压直流电源",
+			"children": [
+				{
+					"name": "高压直流电源设备类模板"
+				},
+				{
+					"name": "山东电力通信电源设备模板"
+				},
+				{
+					"name": "山东电力通信电源设备模板new1017"
+				}
+			]
+		},
+		{
+			"name": "高压配电",
+			"children": [
+				{
+					"name": "高压配电设备全集模板"
+				},
+				{
+					"name": "高压隔离柜设备类模板"
+				},
+				{
+					"name": "高压开关柜设备类模板"
+				},
+				{
+					"name": "操作电源设备类模板"
+				},
+				{
+					"name": "消谐装置设备类模板"
+				},
+				{
+					"name": "接地装置设备类模板"
+				}
+			]
+		}
+	]
+}
   },
   computed: {},
-  watch: {
-    dialogVisible(val) {
-      console.log(val);
-    }
-  },
   methods: {
-    importExcel() {
+    selectTemplate(){
       this.dialogVisible = true;
-    },
-    checkFile(file) {
-      if (!/\.xlsx$/.test(file.name)) {
-        this.$message({
-          message: "请上传Excel文件",
-          type: "warning"
-        });
-        return false;
-      }
-      return true;
-    },
-    handleUploadSuccess() {}
+    }
   }
 };
 </script>
